@@ -23,7 +23,7 @@ class ImagesListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        photosName = Array(0..<20).map{ "\($0)" }
+        photosName = Array(0..<20).map{ "\($0).png" }
     }
     
     
@@ -51,7 +51,7 @@ extension ImagesListViewController: UITableViewDataSource {
         
     func configCell(for cell: ImageListCell, with indexPath: IndexPath) {
                 
-        let imageName = photosName[indexPath.row] + ".png"
+        let imageName = photosName[indexPath.row]
         
         guard let mockedImage = UIImage(named: imageName) else { return }
         cell.cellImageView.image = mockedImage
