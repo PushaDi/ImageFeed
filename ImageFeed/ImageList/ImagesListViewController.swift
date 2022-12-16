@@ -8,8 +8,11 @@
 import UIKit
 
 class ImagesListViewController: UIViewController {
+    @IBOutlet private var tableView: UITableView!
     
     private var photosName = [String]()
+    
+    private let ShowSingleImageSegueIdentifier = "ShowSingleImage"
     
     private lazy var dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -18,19 +21,23 @@ class ImagesListViewController: UIViewController {
         return formatter
     }()
     
-    @IBOutlet private var tableView: UITableView!
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        photosName = Array(0..<20).map{ "\($0).png" }
+        photosName = Array(0...20).map{ "\($0).png" }
     }
     
-    
-    
-    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == ShowSingleImageSegueIdentifier {
+            let viewController = segue.destination as! SingleImageViewController
+            let indexPath = sender as! IndexPath
+            let image = UIImage(named: photosName[indexPath.row])
+            viewController.image = image
+        } else {
+            super.prepare(for: segue, sender: sender)
+        }
+    }
 }
-
 
 extension ImagesListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -50,11 +57,11 @@ extension ImagesListViewController: UITableViewDataSource {
     }
         
     func configCell(for cell: ImageListCell, with indexPath: IndexPath) {
-                
-        let imageName = photosName[indexPath.row]
+        guard let image = UIImage(named: photosName[indexPath.row]) else {
+            return
+        }
         
-        guard let mockedImage = UIImage(named: imageName) else { return }
-        cell.cellImageView.image = mockedImage
+        cell.cellImageView.image = image
                 
         let dateToday = dateFormatter.string(from: Date.init())
         cell.dateLabel.text = dateToday
@@ -72,6 +79,9 @@ extension ImagesListViewController: UITableViewDataSource {
 }
 
 extension ImagesListViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) { }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        performSegue(withIdentifier: ShowSingleImageSegueIdentifier, sender: indexPath)
+    }
 }
 

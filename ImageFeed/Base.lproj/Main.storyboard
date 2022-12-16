@@ -11,7 +11,7 @@
         <!--Image List View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController title="ImageList" id="BYZ-38-t0r" userLabel="Image List View Controller" customClass="ImagesListViewController" customModule="ImageFeed" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="ImageList" modalPresentationStyle="fullScreen" id="BYZ-38-t0r" userLabel="Image List View Controller" customClass="ImagesListViewController" customModule="ImageFeed" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -24,7 +24,7 @@
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationWidth="0.0" reuseIdentifier="ImageListCell" rowHeight="234" id="A71-gR-jdJ" customClass="ImageListCell" customModule="ImageFeed" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="50" width="394" height="234"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="A71-gR-jdJ" id="Jpo-kp-8G8">
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFill" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="A71-gR-jdJ" id="Jpo-kp-8G8">
                                             <rect key="frame" x="0.0" y="0.0" width="394" height="234"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
@@ -56,7 +56,7 @@
                                                         <constraint firstItem="45K-rr-rtU" firstAttribute="leading" secondItem="n5K-kh-DXh" secondAttribute="leading" constant="8" id="hKe-1a-Q1G"/>
                                                     </constraints>
                                                 </view>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageSizeForAccessibilityContentSizeCategory="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ul5-Iv-yUu" userLabel="LikeButton">
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ul5-Iv-yUu" userLabel="LikeButton">
                                                     <rect key="frame" x="343" y="23" width="21" height="18"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
@@ -90,7 +90,6 @@
                                             <outlet property="dateLabel" destination="45K-rr-rtU" id="RMs-ig-obw"/>
                                             <outlet property="dateView" destination="n5K-kh-DXh" id="Ydo-QJ-Ory"/>
                                             <outlet property="likeButton" destination="ul5-Iv-yUu" id="kzG-B4-gdR"/>
-                                            <segue destination="Wcs-O0-6Jt" kind="show" id="gra-M3-uw3"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -113,6 +112,7 @@
                     <navigationItem key="navigationItem" id="vd7-mO-QFu"/>
                     <connections>
                         <outlet property="tableView" destination="Fww-if-Yjn" id="Zgx-Pf-ZTk"/>
+                        <segue destination="Wcs-O0-6Jt" kind="presentation" identifier="ShowSingleImage" modalPresentationStyle="fullScreen" id="muw-Rt-koe"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -239,13 +239,13 @@
         <!--Single Image View Controller-->
         <scene sceneID="7qy-Fd-w0h">
             <objects>
-                <viewController id="Wcs-O0-6Jt" customClass="SingleImageViewController" customModule="ImageFeed" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController modalPresentationStyle="fullScreen" id="Wcs-O0-6Jt" customClass="SingleImageViewController" customModule="ImageFeed" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="9Px-Rd-BaO">
                         <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="0" translatesAutoresizingMaskIntoConstraints="NO" id="Vpn-uQ-J1A">
-                                <rect key="frame" x="0.0" y="91" width="390" height="670"/>
+                                <rect key="frame" x="0.0" y="0.0" width="390" height="810"/>
                             </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Isx-bK-O8F"/>
@@ -254,7 +254,7 @@
                             <constraint firstItem="Isx-bK-O8F" firstAttribute="trailing" secondItem="Vpn-uQ-J1A" secondAttribute="trailing" id="JCb-tk-bVX"/>
                             <constraint firstItem="Vpn-uQ-J1A" firstAttribute="leading" secondItem="Isx-bK-O8F" secondAttribute="leading" id="bRm-i1-xXe"/>
                             <constraint firstItem="Isx-bK-O8F" firstAttribute="bottom" secondItem="Vpn-uQ-J1A" secondAttribute="bottom" id="tw9-SI-hh7"/>
-                            <constraint firstItem="Vpn-uQ-J1A" firstAttribute="top" secondItem="Isx-bK-O8F" secondAttribute="top" id="zeB-xg-dht"/>
+                            <constraint firstItem="Vpn-uQ-J1A" firstAttribute="top" secondItem="9Px-Rd-BaO" secondAttribute="top" id="zeB-xg-dht"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="3Gy-4D-NBf"/>
