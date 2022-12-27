@@ -59,8 +59,12 @@ final class WebViewViewController: UIViewController {
         webView.removeObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress), context: nil)
     }
 
-    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-        if keyPath == #keyPath(WKWebView.estimatedProgress) {
+    override func observeValue(
+        forKeyPath keyPath: String?,
+        of object: Any?,
+        change: [NSKeyValueChangeKey : Any]?,
+        context: UnsafeMutableRawPointer?) {
+        if keyPath == #keyPath(WKWebView.estimatedProgress){
             updateProgress()
         } else {
             super.observeValue(forKeyPath: keyPath, of: object, change: change, context: context)
@@ -89,14 +93,12 @@ extension WebViewViewController: WKNavigationDelegate {
     }
 
     private func code(from navigationAction: WKNavigationAction) -> String? {
-        print(navigationAction.request.url)
         if
             let url = navigationAction.request.url,
             let urlComponents = URLComponents(string: url.absoluteString),
             urlComponents.path == "/oauth/authorize/native",
             let items = urlComponents.queryItems,
-            let codeItem = items.first(where: { $0.name == "code" })
-        {
+            let codeItem = items.first(where: { $0.name == "code" }) {
             return codeItem.value
         } else {
             return nil
