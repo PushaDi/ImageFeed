@@ -17,6 +17,10 @@
 		0A9DA20C2927755200E31F9C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0A9DA20B2927755200E31F9C /* Assets.xcassets */; };
 		0A9DA20F2927755200E31F9C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0A9DA20D2927755200E31F9C /* LaunchScreen.storyboard */; };
 		0A9DA2392927A3E300E31F9C /* ImageListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A9DA2382927A3E300E31F9C /* ImageListCell.swift */; };
+		0AB5838D29505A3700DFBE31 /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AB5838C29505A3700DFBE31 /* AuthViewController.swift */; };
+		0AB5838F2950722A00DFBE31 /* WebViewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AB5838E2950722A00DFBE31 /* WebViewViewController.swift */; };
+		0AB58393295306B300DFBE31 /* OAuth2Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AB58392295306B300DFBE31 /* OAuth2Service.swift */; };
+		0AB583952959AFF500DFBE31 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AB583942959AFF500DFBE31 /* SplashViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +36,10 @@
 		0A9DA20E2927755200E31F9C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0A9DA2102927755200E31F9C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0A9DA2382927A3E300E31F9C /* ImageListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageListCell.swift; sourceTree = "<group>"; };
+		0AB5838C29505A3700DFBE31 /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewController.swift; sourceTree = "<group>"; };
+		0AB5838E2950722A00DFBE31 /* WebViewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewViewController.swift; sourceTree = "<group>"; };
+		0AB58392295306B300DFBE31 /* OAuth2Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OAuth2Service.swift; sourceTree = "<group>"; };
+		0AB583942959AFF500DFBE31 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,6 +88,8 @@
 		0A9DA2012927755100E31F9C /* ImageFeed */ = {
 			isa = PBXGroup;
 			children = (
+				0AB583962959E7ED00DFBE31 /* SplashViewController */,
+				0AB5838B29505A2300DFBE31 /* Auth */,
 				0A65B134293F9F3E00C63910 /* Profile */,
 				0A9DA23A2927A3F300E31F9C /* ImageList */,
 				0A2FA38B294C6E2F0045B9FB /* SingleImageView */,
@@ -111,6 +121,24 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
+		0AB5838B29505A2300DFBE31 /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				0AB5838C29505A3700DFBE31 /* AuthViewController.swift */,
+				0AB5838E2950722A00DFBE31 /* WebViewViewController.swift */,
+				0AB58392295306B300DFBE31 /* OAuth2Service.swift */,
+			);
+			path = Auth;
+			sourceTree = "<group>";
+		};
+		0AB583962959E7ED00DFBE31 /* SplashViewController */ = {
+			isa = PBXGroup;
+			children = (
+				0AB583942959AFF500DFBE31 /* SplashViewController.swift */,
+			);
+			path = SplashViewController;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -121,6 +149,7 @@
 				0A9DA1FB2927755100E31F9C /* Sources */,
 				0A9DA1FC2927755100E31F9C /* Frameworks */,
 				0A9DA1FD2927755100E31F9C /* Resources */,
+				0AB583972959E9CA00DFBE31 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -177,6 +206,26 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		0AB583972959E9CA00DFBE31 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\n    swiftlint\nelse\n    echo \"warning: SwiftLint no installed, download it\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		0A9DA1FB2927755100E31F9C /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -184,10 +233,14 @@
 			files = (
 				0A9DA2072927755100E31F9C /* ImagesListViewController.swift in Sources */,
 				0A9DA2392927A3E300E31F9C /* ImageListCell.swift in Sources */,
+				0AB583952959AFF500DFBE31 /* SplashViewController.swift in Sources */,
 				0A65B133293F95E200C63910 /* ProfileViewController.swift in Sources */,
+				0AB58393295306B300DFBE31 /* OAuth2Service.swift in Sources */,
 				0A9DA2032927755100E31F9C /* AppDelegate.swift in Sources */,
+				0AB5838D29505A3700DFBE31 /* AuthViewController.swift in Sources */,
 				0A2FA38D294EFCE00045B9FB /* Constants.swift in Sources */,
 				0A65B1362947406600C63910 /* SingleImageViewController.swift in Sources */,
+				0AB5838F2950722A00DFBE31 /* WebViewViewController.swift in Sources */,
 				0A9DA2052927755100E31F9C /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
