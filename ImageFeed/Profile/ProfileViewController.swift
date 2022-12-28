@@ -71,7 +71,7 @@ final class ProfileViewController: UIViewController {
         }
     }
 
-    private func setupConstraints() {
+    private func setupProfileImageConstraints() {
         let profileImageWidthAnchor = profileImageView.widthAnchor.constraint(equalToConstant: 70)
         let profileImageHeightAnchor = profileImageView.heightAnchor.constraint(equalToConstant: 70)
         let profileImageLeadingAnchor = profileImageView.leadingAnchor.constraint(
@@ -84,7 +84,10 @@ final class ProfileViewController: UIViewController {
             profileImageHeightAnchor,
             profileImageTopAnchor,
             profileImageLeadingAnchor]
+        NSLayoutConstraint.activate(profileImageViewConstraints)
+    }
 
+    private func setupExitButtonConstraints() {
         let exitButtonWidthAnchor = exitButton.widthAnchor.constraint(equalToConstant: 20)
         let exitButtonHeightAnchor = exitButton.heightAnchor.constraint(equalToConstant: 22)
         let exitButtonCenterYAnchor = exitButton.centerYAnchor.constraint(equalTo: profileImageView.centerYAnchor)
@@ -97,6 +100,10 @@ final class ProfileViewController: UIViewController {
             exitButtonTralingAnchor
         ]
 
+        NSLayoutConstraint.activate(exitButtonConstraints)
+    }
+
+    private func setupProfileNameConstraints() {
         let profileNameLabelTopAnchor = profileNameLabel.topAnchor.constraint(
             equalTo: profileImageView.bottomAnchor, constant: 8
         )
@@ -109,6 +116,10 @@ final class ProfileViewController: UIViewController {
             profileNameLabelLeadingAnchor
         ]
 
+        NSLayoutConstraint.activate(profileNameLabelConstraints)
+    }
+
+    private func setupProfileNicknameConstraints() {
         let profileNicknameLabelTopAnchor = profileNicknameLabel.topAnchor.constraint(
             equalTo: profileNameLabel.bottomAnchor, constant: 8
         )
@@ -121,6 +132,10 @@ final class ProfileViewController: UIViewController {
             profielNicknameLabelLeadingAnchor
         ]
 
+        NSLayoutConstraint.activate(profileNicknameLabelConstraints)
+    }
+
+    private func setupDescriptionLabelConstraints() {
         let descriptionLabelTopAnchor = descriptionLabel.topAnchor.constraint(
             equalTo: profileNicknameLabel.bottomAnchor, constant: 8
         )
@@ -132,12 +147,14 @@ final class ProfileViewController: UIViewController {
             descriptionLabelTopAnchor,
             descriptionLabelLeadingAnchor]
 
-        NSLayoutConstraint.activate(
-            profileImageViewConstraints +
-            exitButtonConstraints +
-            profileNameLabelConstraints +
-            profileNicknameLabelConstraints +
-            descriptionLabelConstraints
-        )
+        NSLayoutConstraint.activate(descriptionLabelConstraints)
+    }
+
+    private func setupConstraints() {
+        setupProfileImageConstraints()
+        setupExitButtonConstraints()
+        setupProfileNameConstraints()
+        setupProfileNicknameConstraints()
+        setupDescriptionLabelConstraints()
     }
 }
