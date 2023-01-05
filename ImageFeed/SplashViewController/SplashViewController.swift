@@ -4,16 +4,17 @@
 //
 //  Created by DMITRY KHLOPTSOV on 26.12.2022.
 //
-
+import ProgressHUD
 import UIKit
+
 
 final class SplashViewController: UIViewController {
     private let oauth2Service = OAuth2Service()
     private let oauth2TokenStorage = OAuth2TokenStorage()
+    private let profileService = ProfileService()
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-
         if let token = oauth2TokenStorage.token {
             switchToTabBarController()
         } else {
@@ -54,6 +55,7 @@ extension SplashViewController {
 
 extension SplashViewController: AuthViewControllerDelegate {
     func authViewController(_ vc: AuthViewController, didAuthenticateWithCode code: String) {
+        UIBlockingProgressHUD.show()
         dismiss(animated: true) { [weak self] in
             guard let self = self else { return }
             self.fetchOAuthToken(code)
@@ -66,12 +68,26 @@ extension SplashViewController: AuthViewControllerDelegate {
             guard let self = self else { return }
                 switch result {
                 case .success(let response):
-                    self.switchToTabBarController()
                     self.oauth2TokenStorage.token = response
+                    self.fetchProfile(with: response)
                 case .failure:
-                    // TODO: [Sprint 11]
+                    UIBlockingProgressHUD.dismiss()
                     break
                 }
+            }
+        }
+    }
+    
+    private func fetchProfile(with token: String) {
+        profileService.fetchProfile(token: token) { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success:
+                UIBlockingProgressHUD.dismiss()
+                self.switchToTabBarController()
+            case .failure:
+                UIBlockingProgressHUD.dismiss()
+                break
             }
         }
     }

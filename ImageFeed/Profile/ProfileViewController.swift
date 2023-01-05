@@ -13,6 +13,8 @@ final class ProfileViewController: UIViewController {
     private let profileNameLabel = UILabel()
     private let profileNicknameLabel = UILabel()
     private let descriptionLabel = UILabel()
+    
+    private let profileService = ProfileService()
 
     override func viewDidLoad() {
         super.viewDidLoad()

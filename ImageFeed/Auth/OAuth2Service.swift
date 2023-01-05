@@ -29,11 +29,46 @@ final class OAuth2TokenStorage {
 }
 
 final class OAuth2Service {
-    private enum NetworkError: Error {
-        case codeError
-    }
+    private let urlSession = URLSession.shared
+    private var task: URLSessionTask?
+    private var lastCode: String?
 
-    func fetchOAuthToken(code: String?, completion: @escaping (Swift.Result<String, Error>) -> Void) {
+
+    func fetchOAuthToken(code: String, completion: @escaping (Swift.Result<String, Error>) -> Void) {
+        assert(Thread.isMainThread)
+        if lastCode == code { return }
+        task?.cancel()
+        lastCode = code
+
+        let request = makeRequest(with: code)
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            if let error = error {
+                completion(.failure(error))
+                }
+            if let response = response as? HTTPURLResponse,
+               response.statusCode < 200 || response.statusCode >= 300 {
+                completion(.failure(Constants.NetworkError.codeError))
+            }
+            if let data = data {
+                do {
+                    let decoder = JSONDecoder()
+                    decoder.keyDecodingStrategy = .convertFromSnakeCase
+                    let response = try decoder.decode(OAuthTokenResponseBody.self, from: data)
+                        completion(.success(response.accessToken))
+                    self.task = nil
+                    if error != nil {
+                        self.lastCode = nil
+                    }
+                } catch let error {
+                    completion(.failure(error))
+                }
+            }
+        }
+        self.task = task
+        task.resume()
+    }
+    
+    private func makeRequest(with code: String) -> URLRequest {
         var urlComponents = URLComponents(string: Constants.unsplashAuthoriseTokenURLString)!
         urlComponents.queryItems = [
             URLQueryItem(name: "client_id", value: Constants.accessKey),
@@ -43,28 +78,8 @@ final class OAuth2Service {
             URLQueryItem(name: "grant_type", value: "authorization_code")
             ]
         let requestURL = urlComponents.url!
-        print(requestURL)
         var request = URLRequest(url: requestURL)
         request.httpMethod = "POST"
-        let task = URLSession.shared.dataTask(with: request) { data, response, error in
-            if let error = error {
-                completion(.failure(error))
-                }
-            if let response = response as? HTTPURLResponse,
-               response.statusCode < 200 || response.statusCode >= 300 {
-                completion(.failure(NetworkError.codeError))
-            }
-            if let data = data {
-                do {
-                    let decoder = JSONDecoder()
-                    decoder.keyDecodingStrategy = .convertFromSnakeCase
-                    let response = try decoder.decode(OAuthTokenResponseBody.self, from: data)
-                        completion(.success(response.accessToken))
-                } catch let error {
-                    completion(.failure(error))
-                }
-            }
-        }
-        task.resume()
+        return request
     }
 }
