@@ -14,7 +14,7 @@ final class ProfileViewController: UIViewController {
     private let profileNicknameLabel = UILabel()
     private let descriptionLabel = UILabel()
     
-    private let profileService = ProfileService()
+    private let profileService = ProfileService.shared
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,6 +25,8 @@ final class ProfileViewController: UIViewController {
         setupDescriptionLabel()
         configureView()
         setupConstraints()
+        guard let profile = profileService.profile else { return }
+        updateProfileDetails(profile: profile)
     }
 
     private func setupProfileImageView() {
@@ -158,5 +160,11 @@ final class ProfileViewController: UIViewController {
         setupProfileNameConstraints()
         setupProfileNicknameConstraints()
         setupDescriptionLabelConstraints()
+    }
+    
+    private func updateProfileDetails(profile: Profile) {
+        profileNameLabel.text = profile.name
+        profileNicknameLabel.text = profile.username
+        descriptionLabel.text = profile.bio
     }
 }

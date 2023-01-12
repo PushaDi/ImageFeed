@@ -23,6 +23,7 @@ final class OAuth2TokenStorage {
         }
         set {
             userDefaults.set(newValue, forKey: "bearerToken")
+            print(userDefaults.value(forKey: "bearerToken"))
             print("Bearer Token set")
         }
     }
@@ -32,7 +33,6 @@ final class OAuth2Service {
     private let urlSession = URLSession.shared
     private var task: URLSessionTask?
     private var lastCode: String?
-
 
     func fetchOAuthToken(code: String, completion: @escaping (Swift.Result<String, Error>) -> Void) {
         assert(Thread.isMainThread)
@@ -67,7 +67,7 @@ final class OAuth2Service {
         self.task = task
         task.resume()
     }
-    
+
     private func makeRequest(with code: String) -> URLRequest {
         var urlComponents = URLComponents(string: Constants.unsplashAuthoriseTokenURLString)!
         urlComponents.queryItems = [
